@@ -1,7 +1,9 @@
 #Groot Deployment 
 
 ###Deploying Groot is now really easy
-*Note: It is necessary for you to have an ssh key (without a password if you want it to be even easier) attached to your github*
+
+Prerequisites:
+- Have an [ssh key attached to your GitHub](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/).
 
 1. Install repo - https://android.googlesource.com/tools/repo/
 
@@ -15,28 +17,27 @@
     sudo apt install repo
 
     ```
-2. Make a directory to house your groot work
+2. Clone this repository
     ```sh
-    mkdir groot
+    git clone https://github.com/acm-uiuc/groot-deploy
     ```
     
 3. Within this directory run the following command to start managing the projects
 
     ```sh    
+    cd groot-deploy
     repo init -u git@github.com:acm-uiuc/groot-manifest
     ```
     
-4. Run the following command to grab the latest releases of the services and frontend
+4. Run the following command to grab the latest releases of all repositories
 
     ```sh    
     repo sync
     ```
 
-    - If you want to grab the latest ever just run the same command 
-5. Run the ```dev_spinup.sh``` script to start up a dev instance of groot (will grab the latest version of each service on github)
-6. Run the ```prod_spinup.sh``` script to start a production version of groot (will grab the latest version of each and place them in their respective containers, so you will need docker)
+    - If you want to update changes with the latest code just run it again.
 
-#First Time Setup
+# First Time Setup
 - Golang 
     + Install Software 
     ```sh
@@ -45,7 +46,7 @@
     && mkdir [SOME DIRECTORY]/src
     mkdir -p [SOME DIRECTORY]/src/github.com/acm-uiuc
     ```
-    --- Add to .profile (.zshrc/.bashrc) ---
+    --- Add to (.zshrc/.bashrc) ---
     ```sh
     export GOPATH=[SOME DIRECTORY]
 
@@ -58,9 +59,9 @@
     export PATH=$PATH:$GOROOT/bin
     ```
     ```sh
-    #macOS
+    # macOS
     brew install go
-    #Ubuntu 14.04+
+    # Ubuntu 14.04+
     sudo curl -O https://storage.googleapis.com/golang/go1.7.linux-amd64.tar.gz
     sudo tar -xvf go1.7.linux-amd64.tar.gz
     sudo mv go /usr/local
@@ -72,9 +73,9 @@
 - Node
     + Install Software
     ```sh
-    #macOS
+    # macOS
     brew install node
-    #Ubuntu 14.04+  
+    # Ubuntu 14.04+  
     sudo apt-get install nodejs
     sudo apt-get install npm
     sudo apt-get install build-essential
@@ -85,19 +86,19 @@
     source ~/.profile
     nvm install 7.2.0
     nvm use 7.2.0
-    sudo npm install -g forever
     ```
 - Ruby
     + Install Software
     ```sh
-    #macOS
+    # macOS
     brew install rbenv
-    #Ubuntu 14.04+
+    # Ubuntu 14.04+
     sudo apt-get install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc (~/.profile / ~/.zshrc)
-    echo 'eval "$(rbenv init -)"' >> ~/.bashrc (~/.profile / ~/.zshrc)
-    source ~/.bashrc (~/.profile / ~/.zshrc)
+    
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+    echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+    source ~/.bashrc
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 
     rbenv install 2.3.1
@@ -108,9 +109,9 @@
 - Python 
     + Install Software
     ```
-    #macOS 
+    # macOS 
     brew install python 
-    #Ubuntu
+    # Ubuntu
     sudo apt install python-pip
     ```
     
@@ -119,19 +120,19 @@
     ```sh
     #macOS
     brew install mysql
-    mysqladmin -u root password 'yourpassword' 
+    mysqladmin -u root password '' 
     mysql.server restart
-    #Ubuntu 14.04+
+    # Ubuntu 14.04+
     sudo apt-get install mysql-server
     sudo apt-get install libmysqlclient-dev
     sudo mysqld --intialize
-    
-    mysql -u root
-    mysql> CREATE DATABASE groot_recruiter_service;
-    mysql> CREATE DATABASE acm_users;
-    mysql> CREATE DATABASE groot_meme_service;
-    mysql> CREATE DATABASE groot_quotes_service;
     ```
+
+    Run the MySQL script to ensure that all databases from all services have been created.
+
+# Running the Server 
+- Run the ```dev_spinup.sh``` script to start up a dev instance of groot (will grab the latest version of each service on github)
+- Run the ```prod_spinup.sh``` script to start a production version of Groot (will set appropriate environment variables and expect the API keys to be set correctly)
 
 ## License
 
